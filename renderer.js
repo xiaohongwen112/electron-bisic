@@ -29,7 +29,7 @@ function startWork() {
     }
   }) 
   workTimer.start(allTime)
-  console.log('11222211444111')
+  console.log('112222114111144111')
 }
 
 
