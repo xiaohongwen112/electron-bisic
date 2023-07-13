@@ -29,6 +29,7 @@ function startWork() {
     }
   }) 
   workTimer.start(allTime)
+  console.log('1')
 }
 
 
