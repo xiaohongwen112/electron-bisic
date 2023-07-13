@@ -1,10 +1,11 @@
-const { app, BrowserWindow, ipcMain, Notification }  = require('electron')
-
+const { app, BrowserWindow, ipcMain, Notification, Menu, dialog  }  = require('electron')
+Menu.setApplicationMenu(null)
 let win // 不挂在全局，垃圾回收机制，win可能被清理掉，突然程序关闭
 app.on('ready', ()=>{
   win = new BrowserWindow({
-    width: 300,
+    width: 1000,
     height: 400,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       // contextIsolation: false,
@@ -29,21 +30,32 @@ app.on('ready', ()=>{
 
 const handleIPC = () => {  //响应事件
   ipcMain.handle('work-notification', async function() {
-    let res = await new Promise((reslove,reject)=>{
-      let notification = new Notification({
-        title: '任务结束',
-        body: '是否开始休息',
-        actions: [{text:'开始休息',type:'button'}],
-        // closeButton: '继续工作'
-      })
-      notification.show()
-      notification.on('action', () => { // 确定按钮
-        reslove('reset')
-      })
-      notification.on('close', () => { // 关闭按钮
-        reslove('work')
+    let res = await new Promise((resolve,reject)=>{
+      // let notification = new Notification({
+      //   title: '任务结束',
+      //   body: '是否开始休息',
+      //   actions: [{text:'开始休息',type:'button'}],
+      //   closeButton: '继续工作'
+      // })
+      // notification.show()
+      // notification.on('action', () => { // 确定按钮
+      //   resolve('reset')
+      // })
+      // notification.on('close', () => { // 关闭按钮
+      //   resolve('work')
+      // })
+
+      dialog.showMessageBox({
+        type: 'info',
+        title: 'warning',
+        message: 'get error electron',
+        buttons: ['OK']
+      }).then(result => {
+          resolve('reset')
+      }).catch(err => {
+         resolve('work')
       })
     })
     return res
   })
-}
+} 

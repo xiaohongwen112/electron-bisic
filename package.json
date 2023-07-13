@@ -4,7 +4,7 @@
   "description": "wenwen",
   "main": "main.js",
   "devDependencies": {
-    "electron": "7.1.7",
+    "electron": "^7.1.7",
     "timer.js": "^1.0.4"
   },
   "scripts": {

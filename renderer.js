@@ -1,33 +1,50 @@
 const { ipcRenderer } = require('electron');
 const Timer = require('timer.js')
+let workTimer
+let allTime = 15 * 60
+let nowTime = null
+
+pause.onclick = () => {
+  // if (workTimer) return 
+  workTimer.pause()
+}
+
+play.onclick = () => {
+  workTimer.start(nowTime)
+}
+
+restart.onclick = () => {
+  workTimer.stop()
+  workTimer.start(allTime)
+}
 
 function startWork() {
-  let workTimer = new Timer({
+  workTimer = new Timer({
     ontick: (ms) => {
       updateTime(ms)
     },
     onend: () => {
+      result.innerText = '123123'
       notification()
     }
   }) 
-  workTimer.start(3)
+  workTimer.start(allTime)
 }
 
 
 
 const updateTime = (ms) => {
-  let timerContainer = document.getElementById('time-container')
-  timerContainer.innerText = ms
+  nowTime = (ms / 1000).toFixed(0)
+  time.innerText = `${nowTime}s`  
 }
 
 const notification = async() => {
   let res = await ipcRenderer.invoke('work-notification')
+  result.innerText = res
   if(res === 'reset') {
-    setTimeout( () => {
-      alert('休息')
-    }, 5* 1000)
+    workTimer.start(allTime)
   } else if(res === 'work') {
-    startWork()
+    workTimer.start(allTime)
   }
 }
 
