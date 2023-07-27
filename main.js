@@ -3,9 +3,10 @@ Menu.setApplicationMenu(null)
 let win // 不挂在全局，垃圾回收机制，win可能被清理掉，突然程序关闭
 app.on('ready', ()=>{
   win = new BrowserWindow({
-    width: 1000,
+    width: 400,
     height: 400,
     autoHideMenuBar: true,
+    // alwaysOnTop: true,
     webPreferences: {
       nodeIntegration: true,
       // contextIsolation: false,

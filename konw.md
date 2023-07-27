@@ -41,7 +41,7 @@ notification.show()
 ```
 ### ipcMain
 ```js
-ipcMain.handle(channel,handler) // 处理渲染进程的channel请求，在handler中return返回结果
+ipcMain.handle(channel, handler) // 处理渲染进程的channel请求，在handler中return返回结果
 ```
 
 ces

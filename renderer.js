@@ -1,9 +1,9 @@
 const { ipcRenderer } = require('electron');
 const Timer = require('timer.js')
 let workTimer
-let allTime = 15 * 60
+let allTime = 60 * 15
 let nowTime = null
-
+let frequencyTime = 0
 pause.onclick = () => {
   // if (workTimer) return 
   workTimer.pause()
@@ -24,7 +24,6 @@ function startWork() {
       updateTime(ms)
     },
     onend: () => {
-      result.innerText = '123123'
       notification()
     }
   }) 
@@ -47,6 +46,8 @@ const notification = async() => {
   } else if(res === 'work') {
     workTimer.start(allTime)
   }
+  frequencyTime++
+  frequency.innerText = Math.ceil((frequencyTime / 3))
 }
 
 startWork()
